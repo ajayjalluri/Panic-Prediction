@@ -31,9 +31,12 @@ page = st.sidebar.selectbox("Select Activity", ["Panic Prediction",])
 st.sidebar.text(" \n")
 
 
-pkl_file1 = open('min_max_scaler1.pkl', 'rb')
+pkl_file1 = open('min_max_scaler.pkl', 'rb')
 scaler = pickle.load(pkl_file1)
 
+
+pkl_file2 = open('rfc.pkl', 'rb')
+rfc = pickle.load(pkl_file2)
 
 
 if page=="Panic Prediction":
@@ -69,7 +72,7 @@ if page=="Panic Prediction":
     form.text(" \n")
 
 
-    x8 = form.selectbox("female",["YES","NO"],key=1)
+    x8 = form.selectbox("Gender",["MALE","FEMALE"],key=1)
     form.text(" \n")
 
 
@@ -80,27 +83,52 @@ if page=="Panic Prediction":
     x10 = form.selectbox('nutrition',list(d['nutrition']),key=1)
     form.text(" \n")
 
-    x10 = form.selectbox('prior',["YES","NO"],key=1)
+    x11 = form.selectbox('prior',["YES","NO"],key=1)
     form.text(" \n")
 
-    x11 = form.selectbox("renal",list(d["renal"]),key=1)
-    form.text(" \n")
-
-
-
-
-    x12 = form.selectbox("smoker",["YES","NO"],key=1)
+    x12 = form.selectbox("renal",list(d["renal"]),key=1)
     form.text(" \n")
 
 
 
-    x13 = form.selectbox("steroids",["YES","NO"],key=1)
+
+    x13 = form.selectbox("smoker",["YES","NO"],key=1)
+    form.text(" \n")
+
+
+
+    x14 = form.selectbox("steroids",["YES","NO"],key=1)
     form.text(" \n")
 
 
     submit_button = form.form_submit_button(label='Predict Panic')
 
 
+    l = {"YES":1,"NO":0}
+    f = {"MALE":0,"FEMALE":1}
+    x1 =  float(x1)
+    x2 = float(x2)
+    x3 = float(x3)
+    x4 = float(x4)
+    x5 = float(x5)
 
+    x6 = int(l[x6])
+    x7 = int(x7)
+    x8 = int(f[x8])
+    x9 = int(l[x9])
+    x10 = int(x10)
+    x11 = int(l[x11])
+    x12 = int(x12)
+    x13 = int(l[x13])
+
+    x14 = int(l[x14])
+
+    o = scaler.transform([[x1,x2,x3,x4,x5]])
+    x1,x2,x3,x4,x5 = o[0][0],o[0][1],o[0][2],o[0][3],o[0][4]
     if submit_button:
-        st.header("predicted output")
+
+
+        c = rfc.predict([[x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,x13,x14]])
+
+        st.header("predicted output :")
+        st.text(c[0])
