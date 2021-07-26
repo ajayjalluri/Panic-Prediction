@@ -31,7 +31,7 @@ page = st.sidebar.selectbox("Select Activity", ["Panic Prediction",])
 st.sidebar.text(" \n")
 
 
-pkl_file1 = open('min_max_scaler.pkl', 'rb')
+pkl_file1 = open('min_max_scaler1.pkl', 'rb')
 scaler = pickle.load(pkl_file1)
 
 
