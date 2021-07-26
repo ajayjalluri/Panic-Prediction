@@ -132,7 +132,13 @@ if page=="Panic Prediction":
         x1,x2,x3,x4,x5 = o[0][0],o[0][1],o[0][2],o[0][3],o[0][4]
 
 
-        c = rfc.predict([[x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,x13,x14]])
+        c1 = rfc.predict([[x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,x13,x14]])
 
-        st.header("predicted output :")
-        st.text(c[0])
+        c2 = rfc.predict_proba([[x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,x13,x14]])
+
+
+
+        st.header("predicted probability :")
+        st.text(c2)
+        st.header("Predict output")
+        st.text(c1[0])
